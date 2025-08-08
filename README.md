@@ -37,7 +37,24 @@ Osheet is a ZIP container with spreadsheet data. This tool:
 
 ## Installation
 
-### Option 1: build from source
+### Option 1: Homebrew (HEAD from main)
+
+Install from local formula (HEAD, build-from-source):
+
+```bash
+brew install --HEAD --build-from-source ./Formula/osheet2xlsx.rb
+osheet2xlsx version
+```
+
+Or via raw URL (without tap):
+
+```bash
+brew install --HEAD --build-from-source https://raw.githubusercontent.com/romanitalian/osheet2xlsx/main/Formula/osheet2xlsx.rb
+```
+
+Note: this installs the latest `main` (head). Stable bottles will appear after first release and move to a dedicated tap.
+
+### Option 2: build from source
 
 ```bash
 git clone https://github.com/romanitalian/osheet2xlsx.git
@@ -48,7 +65,7 @@ go build -o osheet2xlsx .
 
 On Windows replace `./osheet2xlsx` with `osheet2xlsx.exe`.
 
-### Option 2: local development
+### Option 3: local development
 
 ```bash
 # Clone and install locally
@@ -57,7 +74,7 @@ cd osheet2xlsx
 go install .
 ```
 
-### Option 3: go install
+### Option 4: go install
 
 ```bash
 # This will work after first release is created
