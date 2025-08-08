@@ -1,0 +1,97 @@
+# golangci-lint configuration file
+# https://golangci-lint.run/usage/configuration/
+
+run:
+  timeout: 5m
+  go: "1.24"
+  modules-download-mode: readonly
+
+linters:
+  enable:
+    # Critical rules
+    - staticcheck
+    - gosimple
+    
+    # Style rules
+    - gofmt
+    - goimports
+    - govet
+    
+    # Security rules
+    - gosec
+    - errcheck
+    
+    # Performance rules
+    - prealloc
+    - unused
+    
+    # Documentation rules
+    - godot
+    - misspell
+
+  disable:
+    # Disable some rules that are too strict for this project
+    - gocyclo  # cyclomatic complexity
+    - lll       # line length
+    - wsl       # whitespace
+    - gomnd     # magic numbers
+    - gochecknoinits  # init functions
+    - gochecknoglobals # global variables
+
+linters-settings:
+  staticcheck:
+    go: "1.24"
+  gosimple:
+    go: "1.24"
+  govet:
+    check-shadowing: true
+  gosec:
+    excludes:
+      - G404  # Use of weak random number generator
+      - G601  # Implicit memory aliasing in for loop
+      - G204  # Subprocess launched with potential tainted input (test code)
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+  unused:
+    check-exported: false
+  godot:
+    scope: decls
+    period: true
+    capital: true
+  misspell:
+    locale: US
+    ignore-words:
+      - osheet
+      - xlsx
+
+issues:
+  exclude-rules:
+    # Exclude some rules for specific files
+    - path: _test\.go
+      linters:
+        - gomnd
+        - gochecknoinits
+    - path: cmd/
+      linters:
+        - gochecknoglobals
+    - path: internal/config/
+      linters:
+        - gochecknoglobals
+
+  exclude:
+    # Exclude specific issues
+    - "SA9003"  # empty branch - will be fixed manually
+    - "S1016"   # should convert type to struct - will be fixed manually
+
+  max-issues-per-linter: 0
+  max-same-issues: 0
+
+output:
+  format: colored-line-number
+  print-issued-lines: true
+  print-linter-name: true
+  uniq-by-line: false
+
+severity:
+  default-severity: error

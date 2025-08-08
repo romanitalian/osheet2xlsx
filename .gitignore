@@ -1,0 +1,42 @@
+# JetBrains
+.idea/
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets.history/
+*.vsix
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Docker Compose Overrides
+./deployments/docker-compose.override.yaml
+./deploy/docker-compose.override.yaml
+
+# Build
+bin/
+dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go
+vendor/
+
+# macOS
+.DS_Store
+
+# Project specific
+changelog*
