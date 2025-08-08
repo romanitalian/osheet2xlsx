@@ -1,3 +1,7 @@
+<p>
+  <img alt="osheet2xlsx logo" src="docs/osheet2xlsx-logo.png" width="250" height="250" />
+</p>
+
 ### osheet2xlsx (CLI)
 
 [![CI](https://github.com/romanitalian/osheet2xlsx/actions/workflows/ci.yml/badge.svg)](https://github.com/romanitalian/osheet2xlsx/actions/workflows/ci.yml)
