@@ -44,7 +44,8 @@ jobs:
 
     - name: Run tests with coverage
       run: |
-        go test -coverprofile=coverage.out ./internal/... ./cmd/... 2>&1 || echo "Coverage tests failed but continuing..."
+        go test -coverprofile=coverage-report.out ./internal/... ./cmd/... 2>&1 || echo "Coverage tests failed but continuing..."
+        rm -f coverage-report.out
       continue-on-error: true
 
     - name: Upload coverage reports
