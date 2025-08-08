@@ -33,14 +33,7 @@ Osheet is a ZIP container with spreadsheet data. This tool:
 
 ## Installation
 
-### Option 1: go install (requires Go)
-
-```bash
-go install github.com/romanitalian/osheet2xlsx@latest
-# binary will be in $GOBIN or $GOPATH/bin/osheet2xlsx
-```
-
-### Option 2: build from source
+### Option 1: build from source
 
 ```bash
 git clone https://github.com/romanitalian/osheet2xlsx.git
@@ -50,6 +43,25 @@ go build -o osheet2xlsx .
 ```
 
 On Windows replace `./osheet2xlsx` with `osheet2xlsx.exe`.
+
+### Option 2: local development
+
+```bash
+# Clone and install locally
+git clone https://github.com/romanitalian/osheet2xlsx.git
+cd osheet2xlsx
+go install .
+```
+
+### Option 3: go install
+
+```bash
+# This will work after first release is created
+go install github.com/romanitalian/osheet2xlsx/v2@latest
+# binary will be in $GOBIN or $GOPATH/bin/osheet2xlsx
+```
+
+**Note:** Currently there are no releases, so `@latest` won't work. Use build from source or local development options.
 
 ## Quick start
 
