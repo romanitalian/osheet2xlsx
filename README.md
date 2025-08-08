@@ -1,5 +1,5 @@
 <p>
-  <img alt="osheet2xlsx logo" src="docs/osheet2xlsx-logo.png" width="50" height="50" />
+  <img alt="osheet2xlsx logo" src="docs/osheet2xlsx-logo.png" width="250" height="250" />
 </p>
 
 ### osheet2xlsx (CLI)
