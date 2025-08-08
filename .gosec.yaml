@@ -1,0 +1,18 @@
+severity: medium
+confidence: medium
+
+exclude:
+  - G101 # hardcoded credentials (not applicable)
+  - G114 # http server without timeouts (not applicable)
+  - G304 # file inclusion via variable (paths are validated)
+  - G305 # file permissions warnings (controlled)
+  - G306 # file/dir perms defaults (controlled)
+  - G301 # mkdir permission check noise
+  - G302 # write file permission check noise
+
+includes:
+  - ./cmd/...
+  - ./internal/...
+
+fmt: sarif
+
