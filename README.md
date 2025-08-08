@@ -1,5 +1,9 @@
 ### osheet2xlsx (CLI)
 
+[![CI](https://github.com/romanitalian/osheet2xlsx/actions/workflows/ci.yml/badge.svg)](https://github.com/romanitalian/osheet2xlsx/actions/workflows/ci.yml)
+[![Security](https://github.com/romanitalian/osheet2xlsx/actions/workflows/security.yml/badge.svg)](https://github.com/romanitalian/osheet2xlsx/actions/workflows/security.yml)
+[![CodeQL](https://github.com/romanitalian/osheet2xlsx/actions/workflows/codeql.yml/badge.svg)](https://github.com/romanitalian/osheet2xlsx/actions/workflows/codeql.yml)
+
 Command‑line tool for converting Osheet (.osheet) files into Microsoft Excel (.xlsx). Designed for both developers and non‑technical users: easy installation, clear commands, and helpful errors.
 
 ## What it is
