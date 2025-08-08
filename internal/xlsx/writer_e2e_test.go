@@ -5,7 +5,9 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"runtime"
 	"testing"
+	"time"
 
 	osmodel "github.com/romanitalian/osheet2xlsx/v2/internal/osheet"
 )
@@ -30,18 +32,21 @@ func TestWriteBook_FormulasAndDates(t *testing.T) {
 	if err != nil {
 		t.Fatalf("open: %v", err)
 	}
+	defer func() {
+		f.Close()
+		// Force close on Windows
+		if runtime.GOOS == "windows" {
+			time.Sleep(100 * time.Millisecond)
+		}
+	}()
 	st, err := f.Stat()
 	if err != nil {
-		f.Close()
 		t.Fatalf("stat: %v", err)
 	}
 	zr, err := zip.NewReader(f, st.Size())
 	if err != nil {
-		f.Close()
 		t.Fatalf("not a zip: %v", err)
 	}
-	// Close file immediately after creating zip reader
-	f.Close()
 	_ = zr
 }
 
