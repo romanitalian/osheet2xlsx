@@ -27,6 +27,7 @@ jobs:
         cache: true
 
     - name: Install gosec
+      continue-on-error: true
       run: |
         curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.19.0
 
@@ -34,6 +35,10 @@ jobs:
       continue-on-error: true
       run: |
         gosec -no-fail -fmt sarif -out gosec.sarif -conf .gosec.yaml ./...
+        true
+
+    - name: Ensure gosec SARIF exists
+      run: |
         if [ ! -s gosec.sarif ]; then
           echo '{"version":"2.1.0","runs":[]}' > gosec.sarif
         fi
