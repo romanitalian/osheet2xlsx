@@ -3,7 +3,6 @@ package cmd
 import (
 	"archive/zip"
 	"fmt"
-	"os"
 
 	"github.com/spf13/cobra"
 
@@ -43,19 +42,11 @@ func newInspectCmd() *cobra.Command {
 				return nil
 			}
 			// Fallback: open zip and count entries
-			f, err := os.Open(path)
+			zr, err := zip.OpenReader(path)
 			if err != nil {
 				return err
 			}
-			defer f.Close()
-			st, err := f.Stat()
-			if err != nil {
-				return err
-			}
-			zr, err := zip.NewReader(f, st.Size())
-			if err != nil {
-				return err
-			}
+			defer zr.Close()
 			if jsonLog {
 				fmt.Fprintf(getOutputWriter(), "{\"event\":\"inspect\",\"entries\":%d}\n", len(zr.File))
 			} else {

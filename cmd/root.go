@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -66,9 +67,9 @@ func Execute() error {
 }
 
 // getOutputWriter returns the appropriate writer for standard output respecting quiet mode.
-func getOutputWriter() *os.File {
+func getOutputWriter() io.Writer {
 	if quiet {
-		return os.NewFile(0, os.DevNull)
+		return io.Discard
 	}
 	return os.Stdout
 }
@@ -83,20 +84,11 @@ func isTerminal() bool {
 	return (mode & os.ModeCharDevice) != 0
 }
 
-// isWithinDir returns true if file is within baseDir after cleaning paths.
+// isWithinDir returns true if file is within baseDir using only path cleaning and Rel.
+// Both paths are cleaned; no reliance on current working directory resolution.
 func isWithinDir(file string, baseDir string) bool {
-	f := file
-	b := baseDir
-	if !filepath.IsAbs(f) {
-		if abs, err := filepath.Abs(f); err == nil {
-			f = abs
-		}
-	}
-	if !filepath.IsAbs(b) {
-		if abs, err := filepath.Abs(b); err == nil {
-			b = abs
-		}
-	}
+	b := filepath.Clean(baseDir)
+	f := filepath.Clean(file)
 	rel, err := filepath.Rel(b, f)
 	if err != nil {
 		return false
