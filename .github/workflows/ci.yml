@@ -124,9 +124,7 @@ jobs:
 
     - name: Install nancy
       run: |
-        curl -sL https://github.com/sonatype-nexus-community/nancy/releases/latest/download/nancy-linux.amd64 -o nancy
-        chmod +x nancy
-        sudo mv nancy /usr/local/bin/
+        go install github.com/sonatype-nexus-community/nancy@latest
 
     - name: Run security checks
       run: |
