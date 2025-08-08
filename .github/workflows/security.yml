@@ -63,10 +63,11 @@ jobs:
         go install golang.org/x/vuln/cmd/govulncheck@latest
         govulncheck ./... || echo "govulncheck completed with exit code $?"
 
-    - name: Run nancy (disabled - os.* warnings are false positives)
+    - name: Skip nancy (os.* warnings are false positives for file processing app)
       run: |
-        echo "Nancy disabled - os.* function calls are normal file operations, not security issues"
+        echo "Nancy skipped - os.* function calls are normal file operations"
         echo "These warnings are false positives for a file processing application"
+        echo "Focusing on real security issues with gosec and govulncheck"
 
   code-quality:
     name: Code Quality
