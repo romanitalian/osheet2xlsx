@@ -171,3 +171,4 @@ b: ## Build application
 .PHONY: i
 i: ## Install application
 	@make install
+
