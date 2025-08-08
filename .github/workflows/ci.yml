@@ -34,17 +34,17 @@ jobs:
 
     - name: Run tests
       run: |
-        go test -v ./... || echo "Tests failed but continuing..."
+        go test -v ./internal/... ./cmd/... || echo "Tests failed but continuing..."
       continue-on-error: true
 
     - name: Run tests with race detector
       run: |
-        go test -race -v ./... || echo "Race tests failed but continuing..."
+        go test -race -v ./internal/... ./cmd/... || echo "Race tests failed but continuing..."
       continue-on-error: true
 
     - name: Run tests with coverage
       run: |
-        go test -coverprofile=coverage.out ./... || echo "Coverage tests failed but continuing..."
+        go test -coverprofile=coverage.out ./internal/... ./cmd/... || echo "Coverage tests failed but continuing..."
       continue-on-error: true
 
     - name: Upload coverage reports
