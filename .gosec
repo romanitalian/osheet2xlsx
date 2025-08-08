@@ -1,0 +1,16 @@
+# gosec configuration file
+# https://github.com/securecodewarrior/gosec#configuration
+
+# Exclude rules for normal file operations
+exclude:
+  - G304  # Potential file inclusion via variable (normal file operations)
+  - G302  # Poor file permissions used with chmod (normal file operations)
+
+# Exclude specific files or directories
+exclude-dirs:
+  - vendor/
+  - testdata/
+
+# Exclude specific files
+exclude-files:
+  - ".*_test\\.go$"

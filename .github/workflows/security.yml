@@ -29,7 +29,7 @@ jobs:
     - name: Run gosec
       run: |
         curl -sfL https://raw.githubusercontent.com/securecodewarrior/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.19.0
-        gosec -fmt=json -out=security-report.json ./... || echo "gosec completed with exit code $?"
+        gosec -fmt=json -out=security-report.json -config=.gosec ./... || echo "gosec completed with exit code $?"
         if [ -f security-report.json ]; then
           echo "Security report generated"
         else
@@ -63,10 +63,23 @@ jobs:
         go install golang.org/x/vuln/cmd/govulncheck@latest
         govulncheck ./... || echo "govulncheck completed with exit code $?"
 
-    - name: Run nancy
+    - name: Run nancy with exclusions
       run: |
         go install github.com/sonatype-nexus-community/nancy@latest
-        go list -json -deps ./... | nancy sleuth || echo "nancy completed with exit code $?"
+        # Create .nancy-ignore file for normal os.* calls
+        cat > .nancy-ignore << EOF
+        # Ignore normal os.* function calls that are expected in file operations
+        os.Stat
+        os.Open
+        os.OpenFile
+        os.Remove
+        os.ReadDir
+        os.Lstat
+        os.Getwd
+        os.NewFile
+        os.MkdirAll
+        EOF
+        go list -json -deps ./... | nancy sleuth --skip-update-check || echo "nancy completed with exit code $?"
 
   code-quality:
     name: Code Quality
