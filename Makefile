@@ -196,6 +196,28 @@ ci-examples-test: ## Test examples for CI
 ci-examples-clean: ## Clean examples for CI
 	rm -rf outputs/
 
+##@ Homebrew (local)
+
+.PHONY: brew-install-local
+brew-install-local: ## Install via Homebrew from local Formula (HEAD, build-from-source)
+	brew install --HEAD --build-from-source ./Formula/osheet2xlsx.rb | cat
+
+.PHONY: brew-reinstall-local
+brew-reinstall-local: ## Reinstall via Homebrew from local Formula (HEAD)
+	brew reinstall --HEAD --build-from-source ./Formula/osheet2xlsx.rb | cat
+
+.PHONY: brew-uninstall
+brew-uninstall: ## Uninstall Homebrew formula
+	-brew uninstall osheet2xlsx | cat
+
+.PHONY: brew-audit-local
+brew-audit-local: ## Audit local formula (strict)
+	brew audit --strict --online ./Formula/osheet2xlsx.rb | cat
+
+.PHONY: brew-test
+brew-test: ## Run brew test block for the formula
+	brew test osheet2xlsx | cat
+
 ##@ Aliases
 
 .PHONY: r
