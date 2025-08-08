@@ -91,12 +91,37 @@ fmt: ## Format code (alias for format)
 vet: ## Run go vet
 	go vet ./...
 
+##@ Security
+
+.PHONY: security-gosec
+security-gosec: ## Run gosec security scanner
+	curl -sfL https://raw.githubusercontent.com/securecodewarrior/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.19.0
+	gosec ./...
+
+.PHONY: security-govulncheck
+security-govulncheck: ## Run govulncheck for vulnerabilities
+	go install golang.org/x/vuln/cmd/govulncheck@latest
+	govulncheck ./...
+
+.PHONY: security-nancy
+security-nancy: ## Run nancy for dependency vulnerabilities
+	go install github.com/sonatype-nexus-community/nancy@latest
+	go list -json -deps ./... | nancy sleuth
+
+.PHONY: security-all
+security-all: ## Run all security checks
+	@make security-gosec
+	@make security-govulncheck
+	@make security-nancy
+
 ##@ Clean
 
 .PHONY: clean
 clean: ## Clean build artifacts
 	rm -rf bin/
 	rm -f coverage.out coverage.html
+	rm -f mem.prof
+	rm -f security-report.json
 
 ##@ Development
 
@@ -124,6 +149,51 @@ examples: ## Build all examples
 
 .PHONY: examples-clean
 examples-clean: ## Clean example outputs
+	rm -rf outputs/
+
+##@ CI/CD
+
+.PHONY: ci-test
+ci-test: ## Run tests for CI
+	go test -v ./internal/... ./cmd/...
+
+.PHONY: ci-test-race
+ci-test-race: ## Run race tests for CI
+	go test -race -v ./internal/... ./cmd/...
+
+.PHONY: ci-test-coverage
+ci-test-coverage: ## Run coverage tests for CI
+	go test -coverprofile=coverage-report.out ./internal/... ./cmd/...
+
+.PHONY: ci-build
+ci-build: ## Build for CI
+	go build -o bin/osheet2xlsx main.go
+
+.PHONY: ci-build-race
+ci-build-race: ## Build with race detector for CI
+	go build -race -o bin/osheet2xlsx main.go
+
+.PHONY: ci-install
+ci-install: ## Install for CI
+	go install
+
+.PHONY: ci-lint
+ci-lint: ## Run linter for CI
+	golangci-lint run ./...
+
+.PHONY: ci-examples
+ci-examples: ## Build examples for CI
+	@mkdir -p outputs
+	go run main.go convert examples/sample.osheet --out outputs/sample.xlsx --overwrite
+	go run main.go convert examples/typed.osheet --out outputs/typed.xlsx --overwrite
+
+.PHONY: ci-examples-test
+ci-examples-test: ## Test examples for CI
+	go run main.go convert examples/sample.osheet --out outputs/sample_test.xlsx --overwrite
+	go run main.go convert examples/typed.osheet --out outputs/typed_test.xlsx --overwrite
+
+.PHONY: ci-examples-clean
+ci-examples-clean: ## Clean examples for CI
 	rm -rf outputs/
 
 ##@ Aliases
@@ -171,3 +241,8 @@ b: ## Build application
 .PHONY: i
 i: ## Install application
 	@make install
+
+.PHONY: s
+s: ## Run all security checks
+	@make security-all
+

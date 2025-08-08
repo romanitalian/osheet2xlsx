@@ -2,10 +2,10 @@ package convert
 
 import (
 	"errors"
-	"os"
 	"path/filepath"
 	"strings"
 
+	appfs "github.com/romanitalian/osheet2xlsx/v2/internal/fs"
 	"github.com/romanitalian/osheet2xlsx/v2/internal/osheet"
 	"github.com/romanitalian/osheet2xlsx/v2/internal/xlsx"
 )
@@ -20,11 +20,8 @@ func ConvertSingle(inputPath string, outputPath string, overwrite bool) (string,
 		out = name + ".xlsx"
 	}
 
-	dir := filepath.Dir(out)
-	if dir != "." && dir != "" {
-		if err := os.MkdirAll(dir, 0o755); err != nil {
-			return "", err
-		}
+	if err := appfs.EnsureParentDir(out); err != nil {
+		return "", err
 	}
 
 	// Path traversal protection when output directory is set by caller
@@ -40,7 +37,9 @@ func ConvertSingle(inputPath string, outputPath string, overwrite bool) (string,
 	}
 
 	if !overwrite {
-		if _, err := os.Stat(out); err == nil {
+		if ok, err := appfs.FileExists(out); err != nil {
+			return "", err
+		} else if ok {
 			return "", errors.New("output exists; use --overwrite to replace")
 		}
 	}

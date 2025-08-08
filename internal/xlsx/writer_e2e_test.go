@@ -5,7 +5,9 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"runtime"
 	"testing"
+	"time"
 
 	osmodel "github.com/romanitalian/osheet2xlsx/v2/internal/osheet"
 )
@@ -30,6 +32,13 @@ func TestWriteBook_FormulasAndDates(t *testing.T) {
 	if err != nil {
 		t.Fatalf("open: %v", err)
 	}
+	defer func() {
+		f.Close()
+		// Force close on Windows
+		if runtime.GOOS == "windows" {
+			time.Sleep(100 * time.Millisecond)
+		}
+	}()
 	st, err := f.Stat()
 	if err != nil {
 		t.Fatalf("stat: %v", err)

@@ -2,6 +2,7 @@ package log
 
 import (
 	"encoding/json"
+	"io"
 	stdlog "log"
 	"os"
 	"strings"
@@ -44,9 +45,9 @@ func SetupLogger(levelStr string, quiet bool, noColor bool, json bool) error {
 		lvl = LevelInfo
 	}
 
-	output := os.Stderr
+	var output io.Writer = os.Stderr
 	if quiet {
-		output = os.NewFile(0, os.DevNull)
+		output = io.Discard
 	}
 
 	flag := stdlog.LstdFlags

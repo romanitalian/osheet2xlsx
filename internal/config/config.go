@@ -3,7 +3,6 @@ package config
 import (
 	"encoding/json"
 	"errors"
-	"io"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -45,11 +44,10 @@ func Load() (*Config, error) {
 		if p == "" {
 			continue
 		}
-		if st, err := os.Stat(p); err == nil && !st.IsDir() {
-			if err := readJSON(p, cfg); err != nil {
-				return nil, err
-			}
+		if err := readJSON(p, cfg); err == nil {
 			break
+		} else if !os.IsNotExist(err) {
+			return nil, err
 		}
 	}
 	// env overrides
@@ -111,12 +109,7 @@ func candidatePaths() []string {
 }
 
 func readJSON(path string, into *Config) error {
-	f, err := os.Open(path)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-	b, err := io.ReadAll(f)
+	b, err := os.ReadFile(path)
 	if err != nil {
 		return err
 	}

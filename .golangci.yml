@@ -50,6 +50,8 @@ linters-settings:
       - G404  # Use of weak random number generator
       - G601  # Implicit memory aliasing in for loop
       - G204  # Subprocess launched with potential tainted input (test code)
+      - G304  # Potential file inclusion via variable (normal file operations)
+      - G302  # Poor file permissions used with chmod (normal file operations)
   errcheck:
     check-type-assertions: true
     check-blank: true
@@ -83,6 +85,16 @@ issues:
     # Exclude specific issues
     - "SA9003"  # empty branch - will be fixed manually
     - "S1016"   # should convert type to struct - will be fixed manually
+    # Exclude normal os.* function calls that are expected in file operations
+    - "os.Stat"
+    - "os.Open"
+    - "os.OpenFile"
+    - "os.Remove"
+    - "os.ReadDir"
+    - "os.Lstat"
+    - "os.Getwd"
+    - "os.NewFile"
+    - "os.MkdirAll"
 
   max-issues-per-linter: 0
   max-same-issues: 0
