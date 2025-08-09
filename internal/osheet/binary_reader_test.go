@@ -20,7 +20,7 @@ func TestIsBinaryOsheet(t *testing.T) {
 
 	// Test with a non-binary file
 	tempFile := filepath.Join(t.TempDir(), "test.txt")
-	if err := os.WriteFile(tempFile, []byte("not a binary osheet"), 0644); err != nil {
+	if err := os.WriteFile(tempFile, []byte("not a binary osheet"), 0600); err != nil {
 		t.Fatalf("Failed to create test file: %v", err)
 	}
 

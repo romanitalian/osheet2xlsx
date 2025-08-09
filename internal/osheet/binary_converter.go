@@ -65,7 +65,7 @@ func ConvertBinaryToSheet(binary *BinarySheet) (*Sheet, error) {
 	}
 
 	// Convert column specifications
-	var cols []ColSpec
+	cols := make([]ColSpec, 0, len(binary.Cols))
 	for colKey, colData := range binary.Cols {
 		colIndex, err := strconv.Atoi(colKey)
 		if err != nil {
@@ -143,8 +143,16 @@ func GenerateDocumentJSON(sheet *Sheet) ([]byte, error) {
 				"width": col.Width,
 			})
 		}
-		document["sheets"].([]interface{})[0].(map[string]interface{})["cols"] = cols
+		if sheets, ok := document["sheets"].([]interface{}); ok && len(sheets) > 0 {
+			if firstSheet, ok := sheets[0].(map[string]interface{}); ok {
+				firstSheet["cols"] = cols
+			}
+		}
 	}
 
-	return json.MarshalIndent(document, "", "  ")
+	result, err := json.MarshalIndent(document, "", "  ")
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal document: %w", err)
+	}
+	return result, nil
 }

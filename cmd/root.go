@@ -90,8 +90,14 @@ func Execute() error {
 // runConvert handles the conversion logic for direct file input
 func runConvert(cmd *cobra.Command, inputPath string) error {
 	// Get flags from root command
-	outFlag, _ := cmd.Flags().GetString("out")
-	overwriteFlag, _ := cmd.Flags().GetBool("overwrite")
+	outFlag, err := cmd.Flags().GetString("out")
+	if err != nil {
+		return fmt.Errorf("failed to get out flag: %w", err)
+	}
+	overwriteFlag, err := cmd.Flags().GetBool("overwrite")
+	if err != nil {
+		return fmt.Errorf("failed to get overwrite flag: %w", err)
+	}
 
 	// Create default options for single file conversion
 	opts := &convertOptions{

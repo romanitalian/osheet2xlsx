@@ -73,8 +73,8 @@ func ParseBinaryOsheet(path string) (*BinarySheet, error) {
 
 	// Parse the JSON structure
 	var jsonData map[string]interface{}
-	if err := json.Unmarshal([]byte(jsonContent), &jsonData); err != nil {
-		return nil, fmt.Errorf("failed to parse JSON: %w", err)
+	if jsonErr := json.Unmarshal([]byte(jsonContent), &jsonData); jsonErr != nil {
+		return nil, fmt.Errorf("failed to parse JSON: %w", jsonErr)
 	}
 
 	// Extract sheet information
@@ -103,15 +103,15 @@ func ParseBinaryOsheet(path string) (*BinarySheet, error) {
 
 	// Parse the sheet JSON
 	var sheetJSON map[string]interface{}
-	if err := json.Unmarshal([]byte(sheetJSONContent), &sheetJSON); err != nil {
-		return nil, fmt.Errorf("failed to parse sheet JSON: %w", err)
+	if jsonErr := json.Unmarshal([]byte(sheetJSONContent), &sheetJSON); jsonErr != nil {
+		return nil, fmt.Errorf("failed to parse sheet JSON: %w", jsonErr)
 	}
 
 	// Extract title from the first sheet info
 	title := "Sheet"
 	for _, data := range sheets {
-		if sheet, ok := data.(map[string]interface{}); ok {
-			if titleVal, ok := sheet["title"].(string); ok {
+		if sheet, sheetOk := data.(map[string]interface{}); sheetOk {
+			if titleVal, titleOk := sheet["title"].(string); titleOk {
 				title = titleVal
 				break
 			}

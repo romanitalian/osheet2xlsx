@@ -45,7 +45,7 @@ func TestDetectFormat_Binary(t *testing.T) {
 func TestDetectFormat_Unknown(t *testing.T) {
 	// Test with a non-.osheet file
 	tempFile := filepath.Join(t.TempDir(), "test.txt")
-	if err := os.WriteFile(tempFile, []byte("not an osheet file"), 0644); err != nil {
+	if err := os.WriteFile(tempFile, []byte("not an osheet file"), 0600); err != nil {
 		t.Fatalf("Failed to create test file: %v", err)
 	}
 
