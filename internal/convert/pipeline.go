@@ -44,7 +44,7 @@ func ConvertSingle(inputPath string, outputPath string, overwrite bool) (string,
 		}
 	}
 
-	book, err := osheet.ReadBook(inputPath)
+	book, err := osheet.ReadBookUniversal(inputPath)
 	if err != nil {
 		return "", err
 	}
