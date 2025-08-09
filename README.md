@@ -12,15 +12,22 @@ Command‑line tool for converting Osheet (.osheet) files into Microsoft Excel (
 
 ## What it is
 
-Osheet is a ZIP container with spreadsheet data. This tool:
-- opens .osheet (ZIP),
-- reads `document.json` or `sheets/*.json`,
+Osheet files can be in two formats:
+- **ZIP container** with spreadsheet data (most common)
+- **Binary format** (Synology Office format)
+
+This tool:
+- automatically detects the format (ZIP vs binary),
+- opens .osheet files (ZIP or binary),
+- reads `document.json` or `sheets/*.json` (ZIP) or parses binary data,
 - converts values, formulas and some sheet parameters,
 - writes the result to `.xlsx`.
 
 ## Features
 
 - Direct file conversion: `osheet2xlsx file.osheet`
+- **Binary .osheet format support** (Synology Office)
+- **Automatic format detection** (ZIP vs binary)
 - Single‑file and batch conversion
 - Parallel processing, safe overwrite, dry‑run
 - Formulas and basic date/time styling in Excel output
@@ -32,6 +39,7 @@ Osheet is a ZIP container with spreadsheet data. This tool:
 ## Who needs an Osheet converter and why?
 
 - Users migrating away from Synology Office or other platforms to different tools.
+- **Synology Office users** with binary .osheet files.
 - Backup and migration of personal or enterprise datasets.
 - Integration into automated workflows, data exchange, and analytics pipelines.
 
@@ -87,7 +95,7 @@ go install github.com/romanitalian/osheet2xlsx/v3@latest
 # binary will be in $GOBIN or $GOPATH/bin/osheet2xlsx
 ```
 
-**Note:** Currently there are no releases, so `@latest` won't work. Use build from source or local development options.
+**Note:** For the latest stable version, use `@latest`. For development version, use build from source.
 
 ## Quick start
 
@@ -251,6 +259,9 @@ Environment variables (override file):
 
 ## Input format (Osheet)
 
+The tool supports two .osheet formats:
+
+### ZIP Format (most common)
 - Expected to be a ZIP file
 - Inside: `document.json` (preferred) or `sheets/*.json`
 - Supported `document.json` variants:
@@ -258,6 +269,12 @@ Environment variables (override file):
   - `{"sheets":[{"name":"S","cells":[[{"t":"n","v":1},{"f":"SUM(A1:B1)"}],...]}]}`
 - If `document.json` is missing, the tool attempts `sheets/*.json`.
 - If nothing matches, text entries under `sheets/` are embedded or a simple archive listing is produced.
+
+### Binary Format (Synology Office)
+- Binary .osheet files created by Synology Office
+- Automatically detected and parsed
+- Full support for cells, formulas, and formatting
+- Converted to Excel with full fidelity
 
 ## Progress
 
