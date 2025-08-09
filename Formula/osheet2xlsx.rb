@@ -11,9 +11,9 @@ class Osheet2xlsx < Formula
     ver = version || "HEAD"
     ldflags = [
       "-s -w",
-      "-X github.com/romanitalian/osheet2xlsx/v2/cmd.version=#{ver}",
-      "-X github.com/romanitalian/osheet2xlsx/v2/cmd.commit=#{commit}",
-      "-X github.com/romanitalian/osheet2xlsx/v2/cmd.date=#{build_time}",
+      "-X github.com/romanitalian/osheet2xlsx/v3/cmd.version=#{ver}",
+      "-X github.com/romanitalian/osheet2xlsx/v3/cmd.commit=#{commit}",
+      "-X github.com/romanitalian/osheet2xlsx/v3/cmd.date=#{build_time}",
     ].join(" ")
 
     system "go", "build", "-trimpath", "-o", bin/"osheet2xlsx", "-ldflags", ldflags, "."

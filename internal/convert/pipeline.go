@@ -5,9 +5,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	appfs "github.com/romanitalian/osheet2xlsx/v2/internal/fs"
-	"github.com/romanitalian/osheet2xlsx/v2/internal/osheet"
-	"github.com/romanitalian/osheet2xlsx/v2/internal/xlsx"
+	appfs "github.com/romanitalian/osheet2xlsx/v3/internal/fs"
+	"github.com/romanitalian/osheet2xlsx/v3/internal/osheet"
+	"github.com/romanitalian/osheet2xlsx/v3/internal/xlsx"
 )
 
 // ConvertSingle is a placeholder that writes an empty XLSX next to the input file.
@@ -44,7 +44,7 @@ func ConvertSingle(inputPath string, outputPath string, overwrite bool) (string,
 		}
 	}
 
-	book, err := osheet.ReadBook(inputPath)
+	book, err := osheet.ReadBookUniversal(inputPath)
 	if err != nil {
 		return "", err
 	}

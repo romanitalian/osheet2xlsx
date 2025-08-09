@@ -6,8 +6,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	applog "github.com/romanitalian/osheet2xlsx/v2/internal/log"
-	"github.com/romanitalian/osheet2xlsx/v2/internal/osheet"
+	applog "github.com/romanitalian/osheet2xlsx/v3/internal/log"
+	"github.com/romanitalian/osheet2xlsx/v3/internal/osheet"
 )
 
 func newValidateCmd() *cobra.Command {
