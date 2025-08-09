@@ -1,4 +1,4 @@
-module github.com/romanitalian/osheet2xlsx/v2
+module github.com/romanitalian/osheet2xlsx/v3
 
 go 1.24.2
 

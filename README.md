@@ -8,7 +8,7 @@
 [![Security](https://github.com/romanitalian/osheet2xlsx/actions/workflows/security.yml/badge.svg)](https://github.com/romanitalian/osheet2xlsx/actions/workflows/security.yml)
 [![CodeQL](https://github.com/romanitalian/osheet2xlsx/actions/workflows/codeql.yml/badge.svg)](https://github.com/romanitalian/osheet2xlsx/actions/workflows/codeql.yml)
 
-Command‑line tool for converting Osheet (.osheet) files into Microsoft Excel (.xlsx). Designed for both developers and non‑technical users: easy installation, clear commands, and helpful errors.
+Command‑line tool for converting Osheet (.osheet) files into Microsoft Excel (.xlsx). Designed for both developers and non‑technical users: easy installation, clear commands, and helpful errors. Supports direct file conversion: `osheet2xlsx file.osheet`.
 
 ## What it is
 
@@ -20,6 +20,7 @@ Osheet is a ZIP container with spreadsheet data. This tool:
 
 ## Features
 
+- Direct file conversion: `osheet2xlsx file.osheet`
 - Single‑file and batch conversion
 - Parallel processing, safe overwrite, dry‑run
 - Formulas and basic date/time styling in Excel output
@@ -82,7 +83,7 @@ go install .
 
 ```bash
 # This will work after first release is created
-go install github.com/romanitalian/osheet2xlsx/v2@latest
+go install github.com/romanitalian/osheet2xlsx/v3@latest
 # binary will be in $GOBIN or $GOPATH/bin/osheet2xlsx
 ```
 
@@ -91,8 +92,11 @@ go install github.com/romanitalian/osheet2xlsx/v2@latest
 ## Quick start
 
 ```bash
-# Convert a single file
-./osheet2xlsx convert path/to/file.osheet --out file.xlsx
+# Convert a single file (direct)
+./osheet2xlsx path/to/file.osheet
+
+# Convert with custom output
+./osheet2xlsx path/to/file.osheet --out file.xlsx
 
 # Inspect sheet names
 ./osheet2xlsx inspect path/to/file.osheet --json
@@ -103,9 +107,24 @@ go install github.com/romanitalian/osheet2xlsx/v2@latest
 
 ## Commands
 
+### Direct conversion
+
+Convert .osheet to .xlsx by providing the file directly.
+
+```bash
+# Basic conversion
+./osheet2xlsx file.osheet
+
+# With custom output path
+./osheet2xlsx file.osheet --out output.xlsx
+
+# With overwrite
+./osheet2xlsx file.osheet --overwrite
+```
+
 ### convert
 
-Convert .osheet to .xlsx — single input or batch.
+Convert .osheet to .xlsx — single input or batch (legacy command).
 
 Args and flags:
 - `convert [path]` — path to file or directory. Default: current directory.
@@ -122,7 +141,10 @@ Args and flags:
 Examples:
 
 ```bash
-# Single file → explicit output
+# Direct conversion (new)
+./osheet2xlsx ./sample.osheet --out ./sample.xlsx
+
+# Legacy convert command
 ./osheet2xlsx convert ./sample.osheet --out ./sample.xlsx
 
 # Batch (non‑recursive)

@@ -6,7 +6,7 @@ import (
 
 	"github.com/xuri/excelize/v2"
 
-	"github.com/romanitalian/osheet2xlsx/v2/internal/osheet"
+	"github.com/romanitalian/osheet2xlsx/v3/internal/osheet"
 )
 
 // Helper functions to handle excelize errors gracefully

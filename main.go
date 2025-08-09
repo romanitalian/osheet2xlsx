@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	appcmd "github.com/romanitalian/osheet2xlsx/v2/cmd"
+	appcmd "github.com/romanitalian/osheet2xlsx/v3/cmd"
 )
 
 func main() {

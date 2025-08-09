@@ -9,10 +9,10 @@ import (
 
 	"github.com/spf13/cobra"
 
-	appcfg "github.com/romanitalian/osheet2xlsx/v2/internal/config"
-	appconvert "github.com/romanitalian/osheet2xlsx/v2/internal/convert"
-	appfs "github.com/romanitalian/osheet2xlsx/v2/internal/fs"
-	applog "github.com/romanitalian/osheet2xlsx/v2/internal/log"
+	appcfg "github.com/romanitalian/osheet2xlsx/v3/internal/config"
+	appconvert "github.com/romanitalian/osheet2xlsx/v3/internal/convert"
+	appfs "github.com/romanitalian/osheet2xlsx/v3/internal/fs"
+	applog "github.com/romanitalian/osheet2xlsx/v3/internal/log"
 )
 
 type convertOptions struct {
