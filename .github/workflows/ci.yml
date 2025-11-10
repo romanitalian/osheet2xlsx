@@ -73,7 +73,7 @@ jobs:
         cache-dependency-path: go.sum
 
     - name: Install golangci-lint
-      uses: golangci/golangci-lint-action@v4
+      uses: golangci/golangci-lint-action@v8
       with:
         version: v1.64.2
 
